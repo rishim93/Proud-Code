@@ -5,16 +5,25 @@ These are some of the ones that I can share.
 
 ## sql
 
-1. AddressParser : 
+### 1. AddressParser.sql : 
   This is a string parser that has been used to parse out canadian addresses
   
   
-2. DuplicateDataCleaning :
+### 2. DuplicateDataCleaning.sql :
   This is a data cleaning process that I wrote to find duplicates, this process runs before sending the files for duplicate detection in chunks.
   The code that follows this is in python.
   
-3. ForLoopsSQL : 
+### 3. ForLoops.sql : 
   This is a reprentation of running for loops in SQL Server, I know its not always the best practice but sometimes its the way to go.
   
+## python
+
+### 1. DuplicateDetection.py
+  This is the extended version of DuplicateDetection in sql, the files are sent to program in python using SSIS and Processed to match duplicates using record linkage library and   then inhouse code to consolidate all the records to e ingetsed back into SQL server
+
+### 2. FunctionsRecordLinkage.py
+  This are all the functions used in DuplicateDetetction.py to work
   
- 
+### 3. automatedFilegetter.py
+  This program uses selenum to download a zip file and send it to a differnet folder for processing, it also does some basic checks not to overwrite a preexisting file.
+    
