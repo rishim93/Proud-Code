@@ -25,24 +25,28 @@ WHERE city IS NOT NULL
   OR FullAddress3 LIKE ('% PE')
   OR FullAddress3 LIKE ('% QC')
   OR FullAddress3 LIKE ('% SK')
-  OR FullAddress3 LIKE ('% YT')--Alter Table _stage_ADDRESS
- --ADD FULLADDRESS4 Nvarchar(500)
-
+  OR FullAddress3 LIKE ('% YT')
+  
   UPDATE _stage_ADDRESS
   SET FullAddress4 = CASE
                          WHEN patindex('%'+city+'%', fulladdress3)<>0 THEN replace(Fulladdress3, Substring(Fulladdress3, patindex('%'+city+'%', fulladdress3), len(CITY)), '')
                          ELSE FullAddress3
-                     END -- Get all cities for Corresponding postal codes (first 3 digits in a temp table), postal code not like  '_0%'
+                     END 
+                     
+-- Get all cities for Corresponding postal codes (first 3 digits in a temp table), postal code not like  '_0%'
 
   SELECT distinct(city) AS city,
          left(postcode, 3) AS post3 INTO ##cities
-FROM Control_DIME.dbo.PostCodeCity
+FROM Control_DIME.dbo.PostCodeCity --  Refernce Table 
 WHERE left(Postcode, 3) IN
     (SELECT left(Postalcode, 3)
      FROM _stage_ADDRESS
      WHERE Province IS NULL
-       AND PostalCode NOT LIKE '_0%')--select * from _stage_ADDRESS where province is NULL
- -- Replace not found Cities from Fulladdress3 by filling cities using 1st 3 digits of postal code
+       AND PostalCode NOT LIKE '_0%')
+       
+       
+
+-- Replace not found Cities from Fulladdress3 by filling cities using 1st 3 digits of postal code
 
   UPDATE _stage_ADDRESS
   SET City = c.city
@@ -58,7 +62,10 @@ WHERE left(Postcode, 3) IN
                          ELSE FULLADDRESS4
                      END
   UPDATE _stage_ADDRESS
-  SET City = NULL WHERE Province IS NULL -- get Parsed Addresses back into _stage
+  SET City = NULL WHERE Province IS NULL 
+  
+  
+  -- get Parsed Addresses back into _stage
 
   UPDATE _stage
   SET Fulladdress4 = sa.Fulladdress4,
