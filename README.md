@@ -1,6 +1,6 @@
 # Proud-Code
-These are some of the problems I worked on, with some over the head unique solutions.
-These are some of the ones that I can share.
+These are some of the problems I worked on, with some over the head unique solutions, I have brief description of each of these code samples below.
+
 
 
 ## sql
