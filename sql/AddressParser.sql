@@ -37,7 +37,7 @@ WHERE city IS NOT NULL
 
   SELECT distinct(city) AS city,
          left(postcode, 3) AS post3 INTO ##cities
-FROM Control_DIME.dbo.PostCodeCity --  Refernce Table 
+FROM PostCodeCity --  Refernce Table 
 WHERE left(Postcode, 3) IN
     (SELECT left(Postalcode, 3)
      FROM _stage_ADDRESS
